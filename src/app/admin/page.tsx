@@ -60,7 +60,14 @@ export default function AdminPage() {
     init()
   }, [])
 
-  const turnstileSiteKey = process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY || ''
+  // 只在客户端获取环境变量，避免 SSR 不匹配
+  const [turnstileSiteKey, setTurnstileSiteKey] = useState('')
+
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      setTurnstileSiteKey(process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY || '')
+    }
+  }, [])
 
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault()
