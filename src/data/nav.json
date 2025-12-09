@@ -1,0 +1,1137 @@
+{
+  "menus": [
+    {
+      "id": "常用推荐",
+      "type": "link",
+      "title": "常用推荐",
+      "icon": "linecons-star",
+      "items": [
+        {
+          "name": "Dribbble",
+          "url": "https://dribbble.com/",
+          "desc": "全球UI设计师作品分享平台。",
+          "logo": "/assets/images/logos/dribbble.png"
+        },
+        {
+          "name": "测试1测试1",
+          "url": "https://dribbble.com/",
+          "desc": "测试1测试1测试1测试1。",
+          "logo": "/assets/images/logos/dribbble.png"
+        },
+        {
+          "name": "Behance",
+          "url": "https://www.behance.net/",
+          "desc": "Adobe旗下的设计师交流平台。",
+          "logo": "/assets/images/logos/behance.png"
+        },
+        {
+          "name": "UI中国",
+          "url": "http://www.ui.cn/",
+          "desc": "图形交互与界面设计交流、作品展示、学习平台。",
+          "logo": "/assets/images/logos/uicn.png"
+        },
+        {
+          "name": "站酷",
+          "url": "https://www.zcool.com.cn/",
+          "desc": "中国人气设计师互动平台。",
+          "logo": "/assets/images/logos/zcool.png"
+        },
+        {
+          "name": "Pinterest",
+          "url": "https://www.pinterest.com/",
+          "desc": "全球最大的图片采集与分享社区。",
+          "logo": "/assets/images/logos/pinterest.png"
+        },
+        {
+          "name": "Awwwards",
+          "url": "https://www.awwwards.com/",
+          "desc": "全球优秀网页设计作品评选。",
+          "logo": "/assets/images/logos/awwwards.png"
+        },
+        {
+          "name": "Lapa Ninja",
+          "url": "https://www.lapa.ninja/",
+          "desc": "高质量网页灵感集合。",
+          "logo": "/assets/images/logos/Lapa.png"
+        },
+        {
+          "name": "Uplabs",
+          "url": "https://www.uplabs.com/",
+          "desc": "设计资源与灵感社区。",
+          "logo": "/assets/images/logos/uplabs.png"
+        },
+        {
+          "name": "Pttrns",
+          "url": "https://pttrns.com/",
+          "desc": "移动端界面模式灵感库。",
+          "logo": "/assets/images/logos/Pttrns.png"
+        },
+        {
+          "name": "Collect UI",
+          "url": "http://collectui.com/",
+          "desc": "每日精选Dribbble界面灵感。",
+          "logo": "/assets/images/logos/CollectUI.png"
+        },
+        {
+          "name": "Reeoo",
+          "url": "http://reeoo.com/",
+          "desc": "网页设计灵感画廊。",
+          "logo": "/assets/images/logos/reeoo.png"
+        },
+        {
+          "name": "SiteInspire",
+          "url": "https://www.siteinspire.com/",
+          "desc": "优秀网站灵感收集。",
+          "logo": "/assets/images/logos/siteInspire.png"
+        }
+      ]
+    },
+    {
+      "id": "社区资讯",
+      "type": "link",
+      "title": "社区资讯",
+      "icon": "linecons-doc",
+      "items": [
+        {
+          "name": "少数派",
+          "url": "https://sspai.com/",
+          "desc": "高品质数字生活指南。",
+          "logo": "/assets/images/logos/sspai.png"
+        },
+        {
+          "name": "36氪",
+          "url": "https://36kr.com/",
+          "desc": "关注互联网创业与创新。",
+          "logo": "/assets/images/logos/36kr.png"
+        },
+        {
+          "name": "爱范儿",
+          "url": "https://www.ifanr.com/",
+          "desc": "前沿科技与产品报道。",
+          "logo": "/assets/images/logos/default.png"
+        },
+        {
+          "name": "雷锋网",
+          "url": "https://www.leiphone.com/",
+          "desc": "智能硬件与AI产业媒体。",
+          "logo": "/assets/images/logos/leiphone.png"
+        },
+        {
+          "name": "人人都是产品经理",
+          "url": "https://www.woshipm.com/",
+          "desc": "产品经理社区。",
+          "logo": "/assets/images/logos/woshipm.png"
+        },
+        {
+          "name": "PMCAFF",
+          "url": "https://www.pmcaff.com/",
+          "desc": "产品经理实时讨论社区。",
+          "logo": "/assets/images/logos/pmcaff.png"
+        },
+        {
+          "name": "数英网",
+          "url": "https://www.digitaling.com/",
+          "desc": "品牌营销与创意平台。",
+          "logo": "/assets/images/logos/digitaling.png"
+        },
+        {
+          "name": "Medium",
+          "url": "https://medium.com/",
+          "desc": "全球创作者写作平台。",
+          "logo": "/assets/images/logos/medium.png"
+        },
+        {
+          "name": "掘金",
+          "url": "https://juejin.cn/",
+          "desc": "开发者与设计师社区。",
+          "logo": "/assets/images/logos/xituqu.png"
+        },
+        {
+          "name": "电鸭社区",
+          "url": "https://eleduck.com/",
+          "desc": "远程与独立工作社区。",
+          "logo": "/assets/images/logos/eleduck.png"
+        }
+      ]
+    },
+    {
+      "id": "灵感采集",
+      "type": "folder",
+      "title": "灵感采集",
+      "icon": "linecons-lightbulb",
+      "children": [
+        {
+          "id": "发现产品",
+          "type": "link",
+          "title": "发现产品",
+          "icon": "linecons-lightbulb",
+          "items": [
+            {
+              "name": "Product Hunt",
+              "url": "https://www.producthunt.com/",
+              "desc": "每天发现新产品。",
+              "logo": "/assets/images/logos/producthunt.png"
+            },
+            {
+              "name": "Awwwards",
+              "url": "https://www.awwwards.com/",
+              "desc": "顶级网站大奖与灵感。",
+              "logo": "/assets/images/logos/awwwards.png"
+            },
+            {
+              "name": "CSS Design Awards",
+              "url": "https://www.cssdesignawards.com/",
+              "desc": "CSS设计大奖。",
+              "logo": "/assets/images/logos/CSSDesignAwards.png"
+            },
+            {
+              "name": "SiteSee",
+              "url": "https://sitesee.co/",
+              "desc": "极简风格网站收集。",
+              "logo": "/assets/images/logos/SiteSee.png"
+            },
+            {
+              "name": "Web Inspiration",
+              "url": "https://collectui.com/web/",
+              "desc": "精选网站灵感。",
+              "logo": "/assets/images/logos/WebInspiration.png"
+            }
+          ]
+        },
+        {
+          "id": "界面灵感",
+          "type": "link",
+          "title": "界面灵感",
+          "icon": "linecons-lightbulb",
+          "items": [
+            {
+              "name": "Dribbble",
+              "url": "https://dribbble.com/",
+              "desc": "UI/UX 灵感与作品集。",
+              "logo": "/assets/images/logos/dribbble.png"
+            },
+            {
+              "name": "Behance",
+              "url": "https://www.behance.net/",
+              "desc": "设计师作品平台。",
+              "logo": "/assets/images/logos/behance.png"
+            },
+            {
+              "name": "Uplabs",
+              "url": "https://www.uplabs.com/",
+              "desc": "精选UI资源与灵感。",
+              "logo": "/assets/images/logos/uplabs.png"
+            },
+            {
+              "name": "Fribbble",
+              "url": "https://www.fribbble.com/",
+              "desc": "免费Dribbble资源。",
+              "logo": "/assets/images/logos/Fribbble.png"
+            },
+            {
+              "name": "UI Gradients",
+              "url": "https://uigradients.com/",
+              "desc": "渐变灵感集合。",
+              "logo": "/assets/images/logos/uigradients.png"
+            }
+          ]
+        },
+        {
+          "id": "网页灵感",
+          "type": "link",
+          "title": "网页灵感",
+          "icon": "linecons-lightbulb",
+          "items": [
+            {
+              "name": "SiteInspire",
+              "url": "https://www.siteinspire.com/",
+              "desc": "优秀网站画廊。",
+              "logo": "/assets/images/logos/siteInspire.png"
+            },
+            {
+              "name": "Lapa Ninja",
+              "url": "https://www.lapa.ninja/",
+              "desc": "网页灵感集合。",
+              "logo": "/assets/images/logos/Lapa.png"
+            },
+            {
+              "name": "Reeoo",
+              "url": "http://reeoo.com/",
+              "desc": "网页设计灵感。",
+              "logo": "/assets/images/logos/reeoo.png"
+            },
+            {
+              "name": "CSS Design Awards",
+              "url": "https://www.cssdesignawards.com/",
+              "desc": "CSS设计大奖。",
+              "logo": "/assets/images/logos/CSSDesignAwards.png"
+            },
+            {
+              "name": "Awwwards",
+              "url": "https://www.awwwards.com/",
+              "desc": "网页设计奖。",
+              "logo": "/assets/images/logos/awwwards.png"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "素材资源",
+      "type": "folder",
+      "title": "素材资源",
+      "icon": "linecons-thumbs-up",
+      "children": [
+        {
+          "id": "图标素材",
+          "type": "link",
+          "title": "图标素材",
+          "icon": "linecons-thumbs-up",
+          "items": [
+            {
+              "name": "Iconfont",
+              "url": "https://www.iconfont.cn/",
+              "desc": "阿里巴巴矢量图标库。",
+              "logo": "/assets/images/logos/iconfont.png"
+            },
+            {
+              "name": "Iconfinder",
+              "url": "https://www.iconfinder.com/",
+              "desc": "高质量图标搜索引擎。",
+              "logo": "/assets/images/logos/Iconfinder.png"
+            },
+            {
+              "name": "IcoMoon",
+              "url": "https://icomoon.io/app/",
+              "desc": "自定义图标字体生成。",
+              "logo": "/assets/images/logos/IcoMoonApp.png"
+            },
+            {
+              "name": "iconmonstr",
+              "url": "https://iconmonstr.com/",
+              "desc": "免费黑白图标库。",
+              "logo": "/assets/images/logos/iconmonstr.png"
+            },
+            {
+              "name": "Icon Archive",
+              "url": "http://www.iconarchive.com/",
+              "desc": "海量图标下载。",
+              "logo": "/assets/images/logos/iconarchive.png"
+            },
+            {
+              "name": "Ionicons",
+              "url": "https://ionicons.com/",
+              "desc": "精美的开源图标集。",
+              "logo": "/assets/images/logos/ionicons.png"
+            },
+            {
+              "name": "Font Awesome",
+              "url": "https://fontawesome.com/",
+              "desc": "最流行的图标库。",
+              "logo": "/assets/images/logos/fontawesomeicon.png"
+            },
+            {
+              "name": "Simple Line Icons",
+              "url": "https://simplelineicons.github.io/",
+              "desc": "线性图标库。",
+              "logo": "/assets/images/logos/simplelineicons.png"
+            }
+          ]
+        },
+        {
+          "id": "LOGO设计",
+          "type": "link",
+          "title": "LOGO设计",
+          "icon": "linecons-thumbs-up",
+          "items": [
+            {
+              "name": "Instant Logo Search",
+              "url": "http://instantlogosearch.com/",
+              "desc": "快速搜索品牌LOGO。",
+              "logo": "/assets/images/logos/InstantLogoSearch.png"
+            },
+            {
+              "name": "World Vector Logo",
+              "url": "https://worldvectorlogo.com/",
+              "desc": "矢量LOGO下载。",
+              "logo": "/assets/images/logos/worldvectorlogo.png"
+            },
+            {
+              "name": "BrandColors",
+              "url": "https://brandcolors.net/",
+              "desc": "品牌官方配色集合。",
+              "logo": "/assets/images/logos/default.png"
+            }
+          ]
+        },
+        {
+          "id": "平面素材",
+          "type": "link",
+          "title": "平面素材",
+          "icon": "linecons-thumbs-up",
+          "items": [
+            {
+              "name": "Freepik",
+              "url": "https://www.freepik.com/",
+              "desc": "免费平面素材。",
+              "logo": "/assets/images/logos/freepik.png"
+            },
+            {
+              "name": "Pixeden",
+              "url": "https://www.pixeden.com/",
+              "desc": "高质量图形与UI套件。",
+              "logo": "/assets/images/logos/pixeden.png"
+            },
+            {
+              "name": "ForGraphicTM",
+              "url": "https://forgraphictm.com/",
+              "desc": "精品PSD模板。",
+              "logo": "/assets/images/logos/forgraphictm.png"
+            },
+            {
+              "name": "Graphberry",
+              "url": "https://www.graphberry.com/",
+              "desc": "免费PSD与UI资源。",
+              "logo": "/assets/images/logos/graphberry.png"
+            },
+            {
+              "name": "Medialoot",
+              "url": "https://medialoot.com/",
+              "desc": "优质设计素材。",
+              "logo": "/assets/images/logos/Medialoot.png"
+            },
+            {
+              "name": "Freebiesbug",
+              "url": "https://freebiesbug.com/",
+              "desc": "免费设计资源。",
+              "logo": "/assets/images/logos/freebiesbug.png"
+            },
+            {
+              "name": "Freebiesupply",
+              "url": "https://freebiesupply.com/",
+              "desc": "免费PSD/Sketch资源。",
+              "logo": "/assets/images/logos/freebiesupply.png"
+            }
+          ]
+        },
+        {
+          "id": "UI资源",
+          "type": "link",
+          "title": "UI资源",
+          "icon": "linecons-thumbs-up",
+          "items": [
+            {
+              "name": "UI8",
+              "url": "https://ui8.net/",
+              "desc": "高质量UI资源商店。",
+              "logo": "/assets/images/logos/ui8.png"
+            },
+            {
+              "name": "UI Cloud",
+              "url": "http://ui-cloud.com/",
+              "desc": "UI元素搜索引擎。",
+              "logo": "/assets/images/logos/UICloud.png"
+            },
+            {
+              "name": "UIKit.me",
+              "url": "http://uikit.me/",
+              "desc": "界面套件与资源。",
+              "logo": "/assets/images/logos/uikitme.png"
+            },
+            {
+              "name": "Awesome Design Systems",
+              "url": "https://github.com/alexpate/awesome-design-systems",
+              "desc": "设计系统集合。",
+              "logo": "/assets/images/logos/awesome_design_systems.png"
+            }
+          ]
+        },
+        {
+          "id": "Sketch资源",
+          "type": "link",
+          "title": "Sketch资源",
+          "icon": "linecons-thumbs-up",
+          "items": [
+            {
+              "name": "Sketch App Sources",
+              "url": "https://www.sketchappsources.com/",
+              "desc": "Sketch资源下载。",
+              "logo": "/assets/images/logos/sketchappsources.png"
+            },
+            {
+              "name": "Sketch China",
+              "url": "http://www.sketchchina.com/",
+              "desc": "Sketch 中文社区。",
+              "logo": "/assets/images/logos/sketchcn.png"
+            },
+            {
+              "name": "Sketchcasts",
+              "url": "https://www.sketchcasts.net/",
+              "desc": "Sketch 视频教程。",
+              "logo": "/assets/images/logos/sketchcasts.png"
+            },
+            {
+              "name": "Sketch Hunt",
+              "url": "https://sketchhunt.com/",
+              "desc": "每日精选 Sketch 资源。",
+              "logo": "/assets/images/logos/sketchhunt.png"
+            }
+          ]
+        },
+        {
+          "id": "字体资源",
+          "type": "link",
+          "title": "字体资源",
+          "icon": "linecons-thumbs-up",
+          "items": [
+            {
+              "name": "Google Fonts",
+              "url": "https://fonts.google.com/",
+              "desc": "开源英文字体库。",
+              "logo": "/assets/images/logos/googlefont.png"
+            },
+            {
+              "name": "Font Squirrel",
+              "url": "https://www.fontsquirrel.com/",
+              "desc": "免费商用英文字体。",
+              "logo": "/assets/images/logos/fontsquirrel.png"
+            },
+            {
+              "name": "FontM",
+              "url": "http://fontm.com/",
+              "desc": "免费字体下载。",
+              "logo": "/assets/images/logos/FontM.png"
+            },
+            {
+              "name": "Fonts2u",
+              "url": "https://www.fonts2u.com/",
+              "desc": "免费字体下载网站。",
+              "logo": "/assets/images/logos/fonts2u.png"
+            },
+            {
+              "name": "Adobe Fonts",
+              "url": "https://fonts.adobe.com/",
+              "desc": "原Typekit，Adobe 字体。",
+              "logo": "/assets/images/logos/typekit.png"
+            },
+            {
+              "name": "Urban Fonts",
+              "url": "https://www.urbanfonts.com/",
+              "desc": "大量免费字体。",
+              "logo": "/assets/images/logos/UrbanFonts.png"
+            }
+          ]
+        },
+        {
+          "id": "Mockup",
+          "type": "link",
+          "title": "Mockup",
+          "icon": "linecons-thumbs-up",
+          "items": [
+            {
+              "name": "Mockup World",
+              "url": "https://www.mockupworld.co/",
+              "desc": "高质量免费样机。",
+              "logo": "/assets/images/logos/mockupworld.png"
+            },
+            {
+              "name": "Mockup Zone",
+              "url": "https://mockup.zone/",
+              "desc": "精品样机资源。",
+              "logo": "/assets/images/logos/MockupZone.png"
+            },
+            {
+              "name": "Dunnnk",
+              "url": "http://dunnnk.com/",
+              "desc": "一键生成设备样机。",
+              "logo": "/assets/images/logos/Dunnnk.png"
+            }
+          ]
+        },
+        {
+          "id": "摄影图库",
+          "type": "link",
+          "title": "摄影图库",
+          "icon": "linecons-thumbs-up",
+          "items": [
+            {
+              "name": "Unsplash",
+              "url": "https://unsplash.com/",
+              "desc": "高质量无版权图片。",
+              "logo": "/assets/images/logos/unsplash.png"
+            },
+            {
+              "name": "StockSnap",
+              "url": "https://stocksnap.io/",
+              "desc": "免费高分辨率摄影。",
+              "logo": "/assets/images/logos/StockSnap.png"
+            },
+            {
+              "name": "Gratisography",
+              "url": "https://gratisography.com/",
+              "desc": "风格怪诞的免费图库。",
+              "logo": "/assets/images/logos/gratisography.png"
+            },
+            {
+              "name": "VisualHunt",
+              "url": "https://visualhunt.com/",
+              "desc": "CC0 图片搜索。",
+              "logo": "/assets/images/logos/visualhunt.png"
+            },
+            {
+              "name": "Pixabay",
+              "url": "https://pixabay.com/",
+              "desc": "免费图片与视频。",
+              "logo": "/assets/images/logos/pixabay.png"
+            },
+            {
+              "name": "Skitterphoto",
+              "url": "https://skitterphoto.com/",
+              "desc": "CC0 摄影作品。",
+              "logo": "/assets/images/logos/skitterphoto.png"
+            },
+            {
+              "name": "Public Domain Archive",
+              "url": "http://publicdomainarchive.com/",
+              "desc": "公共领域图库。",
+              "logo": "/assets/images/logos/publicdomainarchive.png"
+            },
+            {
+              "name": "Life of Pix",
+              "url": "https://www.lifeofpix.com/",
+              "desc": "免费高质量摄影。",
+              "logo": "/assets/images/logos/lifeofpix.png"
+            },
+            {
+              "name": "MMT",
+              "url": "https://mmtstock.com/",
+              "desc": "自然类免费图库。",
+              "logo": "/assets/images/logos/mmtstock.png"
+            },
+            {
+              "name": "JESHOOTS",
+              "url": "https://jeshoots.com/",
+              "desc": "情景类免费摄影。",
+              "logo": "/assets/images/logos/jeshoots.png"
+            },
+            {
+              "name": "Free Nature Stock",
+              "url": "http://freenaturestock.com/",
+              "desc": "自然风景图库。",
+              "logo": "/assets/images/logos/freenaturestock.png"
+            },
+            {
+              "name": "ISO Republic",
+              "url": "https://isorepublic.com/",
+              "desc": "高质量图片与视频。",
+              "logo": "/assets/images/logos/isorepublic.png"
+            }
+          ]
+        },
+        {
+          "id": "PPT资源",
+          "type": "link",
+          "title": "PPT资源",
+          "icon": "linecons-thumbs-up",
+          "items": [
+            {
+              "name": "优品PPT",
+              "url": "https://www.ypppt.com/",
+              "desc": "优质PPT模板下载。",
+              "logo": "/assets/images/logos/ypppt.png"
+            },
+            {
+              "name": "PPT Plus",
+              "url": "http://www.pptplus.cn/",
+              "desc": "PPT模板与教程。",
+              "logo": "/assets/images/logos/pptplus.png"
+            },
+            {
+              "name": "PPT Mind",
+              "url": "http://www.pptmind.com/",
+              "desc": "演示设计资源。",
+              "logo": "/assets/images/logos/pptmind.png"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "常用工具",
+      "type": "folder",
+      "title": "常用工具",
+      "icon": "linecons-diamond",
+      "children": [
+        {
+          "id": "图形创意",
+          "type": "link",
+          "title": "图形创意",
+          "icon": "linecons-diamond",
+          "items": [
+            {
+              "name": "Trianglify",
+              "url": "https://trianglify.io/",
+              "desc": "生成低多边形背景。",
+              "logo": "/assets/images/logos/trianglify.png"
+            },
+            {
+              "name": "3D",
+              "url": "https://zzz.dog/",
+              "desc": "3D有趣图形库。",
+              "logo": "/assets/images/logos/threed.png"
+            },
+            {
+              "name": "SVGOMG",
+              "url": "https://jakearchibald.github.io/svgomg/",
+              "desc": "SVG 压缩优化。",
+              "logo": "/assets/images/logos/svgomg.png"
+            },
+            {
+              "name": "QR 生成器",
+              "url": "https://goqr.me/",
+              "desc": "在线二维码生成。",
+              "logo": "/assets/images/logos/goqr.png"
+            },
+            {
+              "name": "Ezgif",
+              "url": "https://ezgif.com/",
+              "desc": "动图编辑与优化。",
+              "logo": "/assets/images/logos/Ezgif.png"
+            }
+          ]
+        },
+        {
+          "id": "界面设计",
+          "type": "link",
+          "title": "界面设计",
+          "icon": "linecons-diamond",
+          "items": [
+            {
+              "name": "Figma",
+              "url": "https://www.figma.com/",
+              "desc": "基于云的协作设计工具。",
+              "logo": "/assets/images/logos/figma.png"
+            },
+            {
+              "name": "InVision",
+              "url": "https://www.invisionapp.com/",
+              "desc": "原型与协作平台。",
+              "logo": "/assets/images/logos/invisionapp.png"
+            },
+            {
+              "name": "Framer",
+              "url": "https://www.framer.com/",
+              "desc": "交互原型与站点搭建。",
+              "logo": "/assets/images/logos/framer.png"
+            },
+            {
+              "name": "ProtoPie",
+              "url": "https://www.protopie.io/",
+              "desc": "高级交互原型。",
+              "logo": "/assets/images/logos/protopie.png"
+            },
+            {
+              "name": "Flinto",
+              "url": "https://www.flinto.com/",
+              "desc": "交互动效原型。",
+              "logo": "/assets/images/logos/flinto.png"
+            },
+            {
+              "name": "Principle",
+              "url": "http://principleformac.com/",
+              "desc": "界面动效设计。",
+              "logo": "/assets/images/logos/principle.png"
+            },
+            {
+              "name": "Adobe XD",
+              "url": "https://www.adobe.com/products/xd.html",
+              "desc": "Adobe 原型设计工具。",
+              "logo": "/assets/images/logos/ADOBEXDCC.png"
+            }
+          ]
+        },
+        {
+          "id": "交互动效",
+          "type": "link",
+          "title": "交互动效",
+          "icon": "linecons-diamond",
+          "items": [
+            {
+              "name": "After Effects",
+              "url": "https://www.adobe.com/products/aftereffects.html",
+              "desc": "视频与动效制作。",
+              "logo": "/assets/images/logos/AdobeAfterEffectsCC.png"
+            },
+            {
+              "name": "ProtoPie",
+              "url": "https://www.protopie.io/",
+              "desc": "跨平台交互原型。",
+              "logo": "/assets/images/logos/protopie.png"
+            },
+            {
+              "name": "Principle",
+              "url": "http://principleformac.com/",
+              "desc": "微交互动效设计。",
+              "logo": "/assets/images/logos/principle.png"
+            }
+          ]
+        },
+        {
+          "id": "在线配色",
+          "type": "link",
+          "title": "在线配色",
+          "icon": "linecons-diamond",
+          "items": [
+            {
+              "name": "Coolors",
+              "url": "https://coolors.co/",
+              "desc": "智能配色方案生成器。",
+              "logo": "/assets/images/logos/coolors.png"
+            },
+            {
+              "name": "Color Hunt",
+              "url": "https://colorhunt.co/",
+              "desc": "精选配色灵感。",
+              "logo": "/assets/images/logos/colorhunt.png"
+            },
+            {
+              "name": "Khroma",
+              "url": "http://khroma.co/",
+              "desc": "基于AI的配色工具。",
+              "logo": "/assets/images/logos/khroma.png"
+            },
+            {
+              "name": "UI Gradients",
+              "url": "https://uigradients.com/",
+              "desc": "渐变色灵感。",
+              "logo": "/assets/images/logos/uigradients.png"
+            },
+            {
+              "name": "Grabient",
+              "url": "https://www.grabient.com/",
+              "desc": "渐变生成器。",
+              "logo": "/assets/images/logos/grabient.png"
+            },
+            {
+              "name": "WebGradients",
+              "url": "https://webgradients.com/",
+              "desc": "180+ 渐变配色。",
+              "logo": "/assets/images/logos/webgradients.png"
+            }
+          ]
+        },
+        {
+          "id": "在线工具",
+          "type": "link",
+          "title": "在线工具",
+          "icon": "linecons-diamond",
+          "items": [
+            {
+              "name": "TinyPNG",
+              "url": "https://tinypng.com/",
+              "desc": "PNG/JPG 图片压缩。",
+              "logo": "/assets/images/logos/tinypng.png"
+            },
+            {
+              "name": "SVGOMG",
+              "url": "https://jakearchibald.github.io/svgomg/",
+              "desc": "SVG 压缩优化。",
+              "logo": "/assets/images/logos/svgomg.png"
+            },
+            {
+              "name": "Ezgif",
+              "url": "https://ezgif.com/",
+              "desc": "GIF 压缩与编辑。",
+              "logo": "/assets/images/logos/Ezgif.png"
+            },
+            {
+              "name": "QR 生成器",
+              "url": "https://goqr.me/",
+              "desc": "在线二维码生成。",
+              "logo": "/assets/images/logos/goqr.png"
+            },
+            {
+              "name": "Wappalyzer",
+              "url": "https://www.wappalyzer.com/",
+              "desc": "网站技术栈检测。",
+              "logo": "/assets/images/logos/wappalyzer.png"
+            }
+          ]
+        },
+        {
+          "id": "Chrome插件",
+          "type": "link",
+          "title": "Chrome插件",
+          "icon": "linecons-diamond",
+          "items": [
+            {
+              "name": "CSS Peeper",
+              "url": "https://csspeeper.com/",
+              "desc": "一键查看网页样式。",
+              "logo": "/assets/images/logos/csspeeper.png"
+            },
+            {
+              "name": "Wappalyzer",
+              "url": "https://www.wappalyzer.com/",
+              "desc": "技术栈识别插件。",
+              "logo": "/assets/images/logos/wappalyzer.png"
+            },
+            {
+              "name": "Sizzy",
+              "url": "https://sizzy.co/",
+              "desc": "多设备响应式预览。",
+              "logo": "/assets/images/logos/sizzy.png"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "学习教程",
+      "type": "folder",
+      "title": "学习教程",
+      "icon": "linecons-pencil",
+      "children": [
+        {
+          "id": "设计规范",
+          "type": "link",
+          "title": "设计规范",
+          "icon": "linecons-pencil",
+          "items": [
+            {
+              "name": "Apple HIG",
+              "url": "https://developer.apple.com/design/human-interface-guidelines/",
+              "desc": "Apple 人机交互指南。",
+              "logo": "/assets/images/logos/human_interface_guidelines.png"
+            },
+            {
+              "name": "Google Material",
+              "url": "https://material.io/design/",
+              "desc": "Google 材料设计规范。",
+              "logo": "/assets/images/logos/GoogleDesign.png"
+            },
+            {
+              "name": "Design Guidelines",
+              "url": "http://designguidelines.co/",
+              "desc": "各大公司设计规范集合。",
+              "logo": "/assets/images/logos/designguidelines.png"
+            }
+          ]
+        },
+        {
+          "id": "视频教程",
+          "type": "link",
+          "title": "视频教程",
+          "icon": "linecons-pencil",
+          "items": [
+            {
+              "name": "慕课网",
+              "url": "https://www.imooc.com/",
+              "desc": "IT/设计在线课程。",
+              "logo": "/assets/images/logos/imooc.png"
+            },
+            {
+              "name": "YouTube",
+              "url": "https://www.youtube.com/",
+              "desc": "全球视频学习平台。",
+              "logo": "/assets/images/logos/youtube.png"
+            },
+            {
+              "name": "Sketchcasts",
+              "url": "https://www.sketchcasts.net/",
+              "desc": "Sketch 视频课程。",
+              "logo": "/assets/images/logos/sketchcasts.png"
+            }
+          ]
+        },
+        {
+          "id": "设计文章",
+          "type": "link",
+          "title": "设计文章",
+          "icon": "linecons-pencil",
+          "items": [
+            {
+              "name": "Smashing Magazine",
+              "url": "https://www.smashingmagazine.com/",
+              "desc": "Web设计与开发。",
+              "logo": "/assets/images/logos/smashingmagazine.png"
+            },
+            {
+              "name": "UX Design Weekly",
+              "url": "https://uxdesignweekly.com/",
+              "desc": "每周精选 UX 文章。",
+              "logo": "/assets/images/logos/uxdesignweekly.png"
+            },
+            {
+              "name": "Anyway.FM",
+              "url": "https://anyway.fm/",
+              "desc": "设计电台与文章。",
+              "logo": "/assets/images/logos/anyway.png"
+            },
+            {
+              "name": "优设",
+              "url": "https://www.uisdc.com/",
+              "desc": "设计干货社区。",
+              "logo": "/assets/images/logos/uisdc.png"
+            }
+          ]
+        },
+        {
+          "id": "设计电台",
+          "type": "link",
+          "title": "设计电台",
+          "icon": "linecons-pencil",
+          "items": [
+            {
+              "name": "UX Coffee",
+              "url": "https://uxcoffee.com/",
+              "desc": "中文 UX 设计播客。",
+              "logo": "/assets/images/logos/uxcoffee.png"
+            },
+            {
+              "name": "Teahour",
+              "url": "https://teahour.fm/",
+              "desc": "技术与设计访谈。",
+              "logo": "/assets/images/logos/default.png"
+            },
+            {
+              "name": "极客电台",
+              "url": "https://voice.geekbang.org/",
+              "desc": "技术与产品思考。",
+              "logo": "/assets/images/logos/default.png"
+            }
+          ]
+        },
+        {
+          "id": "交互设计",
+          "type": "link",
+          "title": "交互设计",
+          "icon": "linecons-pencil",
+          "items": [
+            {
+              "name": "NN/g",
+              "url": "https://www.nngroup.com/articles/",
+              "desc": "尼尔森诺曼设计文章。",
+              "logo": "/assets/images/logos/nngroup.png"
+            },
+            {
+              "name": "Little Big Details",
+              "url": "http://littlebigdetails.com/",
+              "desc": "小而美的交互细节。",
+              "logo": "/assets/images/logos/littlebigdetails.png"
+            },
+            {
+              "name": "Boxes and Arrows",
+              "url": "http://boxesandarrows.com/",
+              "desc": "信息架构与UX。",
+              "logo": "/assets/images/logos/boxesandarrows.png"
+            },
+            {
+              "name": "Really Good UX",
+              "url": "https://reallygoodux.io/",
+              "desc": "优秀UX案例库。",
+              "logo": "/assets/images/logos/ReallyGoodUX.png"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "UED团队",
+      "type": "link",
+      "title": "UED团队",
+      "icon": "linecons-user",
+      "items": [
+        {
+          "name": "阿里巴巴UED",
+          "url": "http://www.aliued.com/",
+          "desc": "阿里巴巴用户体验设计部。",
+          "logo": "/assets/images/logos/aliued.png"
+        },
+        {
+          "name": "腾讯ISUX",
+          "url": "https://isux.tencent.com/",
+          "desc": "腾讯社交用户体验设计。",
+          "logo": "/assets/images/logos/isux.png"
+        },
+        {
+          "name": "百度UED",
+          "url": "http://ued.baidu.com/",
+          "desc": "百度用户体验中心。",
+          "logo": "/assets/images/logos/uedbaidu.png"
+        },
+        {
+          "name": "阿里云UED",
+          "url": "https://ued.aliyun.com/",
+          "desc": "阿里云设计中心。",
+          "logo": "/assets/images/logos/aliyun.png"
+        },
+        {
+          "name": "京东JDC",
+          "url": "https://jdc.jd.com/",
+          "desc": "京东设计中心。",
+          "logo": "/assets/images/logos/jdc.png"
+        },
+        {
+          "name": "携程UED",
+          "url": "https://ued.ctrip.com/",
+          "desc": "携程设计委员会。",
+          "logo": "/assets/images/logos/ctrip.png"
+        },
+        {
+          "name": "网易UEDC",
+          "url": "http://uedc.163.com/",
+          "desc": "网易用户体验设计中心。",
+          "logo": "/assets/images/logos/uedc.png"
+        },
+        {
+          "name": "Tgideas",
+          "url": "https://tgideas.qq.com/",
+          "desc": "腾讯互娱设计中心。",
+          "logo": "/assets/images/logos/tgideas.png"
+        },
+        {
+          "name": "eico design",
+          "url": "http://www.eico-design.com/",
+          "desc": "用户体验创新咨询。",
+          "logo": "/assets/images/logos/eico.png"
+        }
+      ]
+    },
+    {
+      "id": "测试2测试2测试2测试2",
+      "type": "link",
+      "title": "测试2测试2测试2测试2",
+      "icon": "linecons-star",
+      "items": []
+    },
+    {
+      "id": "测试3测试3测试3测试3",
+      "type": "folder",
+      "title": "测试3测试3测试3测试3",
+      "icon": "linecons-lightbulb",
+      "children": [
+        {
+          "id": "测试3测试3测试3测试3",
+          "type": "link",
+          "title": "测试3测试3测试3测试3",
+          "icon": "linecons-tag",
+          "items": [
+            {
+              "name": "测试3",
+              "url": "https://",
+              "desc": "测试3",
+              "logo": ""
+            },
+            {
+              "name": "测试3测试3测试3测试3测试3",
+              "url": "https://",
+              "desc": "测试3测试3测试3测试3测试3",
+              "logo": ""
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
