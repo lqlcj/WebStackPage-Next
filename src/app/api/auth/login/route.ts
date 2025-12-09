@@ -1,5 +1,7 @@
 import { NextResponse } from 'next/server'
 
+export const runtime = 'edge'
+
 const MAX_AGE = 60 * 60 * 24 * 7 // 7 days
 
 export async function POST(request: Request) {

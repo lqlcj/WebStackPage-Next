@@ -2,6 +2,7 @@ import { NextResponse, NextRequest } from 'next/server'
 import { storage } from '@/lib/storage'
 import { validateNavData } from '@/utils/nav'
 
+export const runtime = 'edge'
 export const dynamic = 'force-dynamic'
 
 export async function GET() {
