@@ -6,8 +6,30 @@ const MAX_AGE = 60 * 60 * 24 * 7 // 7 days
 
 export async function POST(request: Request) {
   try {
-    const { password } = await request.json()
+    const { password, turnstileToken } = await request.json()
     const expected = process.env.ADMIN_PASSWORD || 'admin123'
+
+    // 验证 Turnstile token（如果配置了 site key）
+    const turnstileSecretKey = process.env.TURNSTILE_SECRET_KEY
+    if (turnstileSecretKey) {
+      if (!turnstileToken) {
+        return NextResponse.json({ error: 'Missing turnstile token' }, { status: 400 })
+      }
+
+      const verifyRes = await fetch('https://challenges.cloudflare.com/turnstile/v0/siteverify', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          secret: turnstileSecretKey,
+          response: turnstileToken,
+        }),
+      })
+
+      const verifyData = await verifyRes.json()
+      if (!verifyData.success) {
+        return NextResponse.json({ error: 'Turnstile verification failed' }, { status: 400 })
+      }
+    }
 
     if (password !== expected) {
       return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })

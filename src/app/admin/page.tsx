@@ -1,24 +1,41 @@
 'use client'
 
-import { useEffect, useState } from 'react'
+import { useEffect, useState, useRef } from 'react'
 import type { NavData } from '@/types/nav'
 import VisualEditor from '@/components/admin/VisualEditor'
+import Turnstile from '@/components/Turnstile'
 
 export default function AdminPage() {
   const [loading, setLoading] = useState(true)
   const [saving, setSaving] = useState(false)
   const [error, setError] = useState<string | null>(null)
+  const [success, setSuccess] = useState<string | null>(null)
 
   const [loggedIn, setLoggedIn] = useState<boolean>(false)
   const [password, setPassword] = useState('')
   const [authLoading, setAuthLoading] = useState(false)
-
-  // 视图模式：visual（可视化）/ json（原始 JSON）
-  const [view, setView] = useState<'visual' | 'json'>('visual')
+  const [turnstileToken, setTurnstileToken] = useState<string | null>(null)
 
   // 数据状态
   const [navObj, setNavObj] = useState<NavData | null>(null)
-  const [jsonText, setJsonText] = useState('')
+
+  // 返回顶部功能
+  const [showBackToTop, setShowBackToTop] = useState(false)
+  const contentRef = useRef<HTMLDivElement>(null)
+
+  // 监听滚动，显示/隐藏返回顶部按钮
+  useEffect(() => {
+    const handleScroll = () => {
+      setShowBackToTop(window.scrollY > 300)
+    }
+    window.addEventListener('scroll', handleScroll)
+    return () => window.removeEventListener('scroll', handleScroll)
+  }, [])
+
+  // 返回顶部
+  const scrollToTop = () => {
+    window.scrollTo({ top: 0, behavior: 'smooth' })
+  }
 
   // 登录检测 + 拉取数据
   useEffect(() => {
@@ -33,7 +50,6 @@ export default function AdminPage() {
           if (!res.ok) throw new Error('加载导航数据失败')
           const data = (await res.json()) as NavData
           setNavObj(data)
-          setJsonText(JSON.stringify(data, null, 2))
         }
       } catch (e: any) {
         setError(e.message || '未知错误')
@@ -44,15 +60,21 @@ export default function AdminPage() {
     init()
   }, [])
 
+  const turnstileSiteKey = process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY || ''
+
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault()
+    if (turnstileSiteKey && !turnstileToken) {
+      setError('请完成人机验证')
+      return
+    }
     setAuthLoading(true)
     setError(null)
     try {
       const res = await fetch('/api/auth/login', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ password }),
+        body: JSON.stringify({ password, turnstileToken: turnstileToken || undefined }),
       })
       if (!res.ok) {
         const j = await res.json().catch(() => ({}))
@@ -65,52 +87,40 @@ export default function AdminPage() {
       if (!navRes.ok) throw new Error('加载导航数据失败')
       const data = (await navRes.json()) as NavData
       setNavObj(data)
-      setJsonText(JSON.stringify(data, null, 2))
     } catch (e: any) {
       setError(e.message || '未知错误')
+      setTurnstileToken(null) // 失败后重置 token
     } finally {
       setAuthLoading(false)
       setLoading(false)
     }
   }
 
-  // 可视化编辑回调：实时同步 JSON 文本（便于切换视图）
+  // 可视化编辑回调
   const onVisualChange = (v: NavData) => {
     setNavObj(v)
-    try {
-      setJsonText(JSON.stringify(v, null, 2))
-    } catch {}
   }
 
   // 保存
   const handleSave = async () => {
     setSaving(true)
     setError(null)
+    setSuccess(null)
     try {
-      let payload: NavData
-      if (view === 'visual') {
-        if (!navObj) throw new Error('数据未加载')
-        payload = navObj
-      } else {
-        try {
-          const parsed = JSON.parse(jsonText)
-          payload = parsed
-          setNavObj(parsed)
-        } catch (e) {
-          throw new Error('JSON 解析失败，请检查格式是否正确')
-        }
-      }
+      if (!navObj) throw new Error('数据未加载')
 
       const res = await fetch('/api/nav', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(payload),
+        body: JSON.stringify(navObj),
       })
       if (!res.ok) {
         const j = await res.json().catch(() => ({}))
         throw new Error(j.error || '保存失败（可能未登录或数据校验失败）')
       }
-      alert('保存成功！')
+      setSuccess('保存成功！')
+      // 3秒后自动清除成功提示
+      setTimeout(() => setSuccess(null), 3000)
     } catch (e: any) {
       setError(e.message || '未知错误')
     } finally {
@@ -119,11 +129,16 @@ export default function AdminPage() {
   }
 
   return (
-    <div className="main-content" style={{ padding: 20, maxWidth: 1120, margin: '0 auto' }}>
+    <div className="main-content" style={{ padding: 20, maxWidth: 1120, margin: '0 auto', position: 'relative' }} ref={contentRef}>
       <h3 style={{ marginBottom: 10 }}>管理后台</h3>
       {error && (
-        <div style={{ background: '#fee', border: '1px solid #fbb', padding: 10, marginBottom: 10, color: '#a00' }}>
+        <div style={{ background: '#fee', border: '1px solid #fbb', padding: 10, marginBottom: 10, color: '#a00', borderRadius: 4 }}>
           {error}
+        </div>
+      )}
+      {success && (
+        <div style={{ background: '#dfd', border: '1px solid #bfb', padding: 10, marginBottom: 10, color: '#060', borderRadius: 4 }}>
+          {success}
         </div>
       )}
 
@@ -140,8 +155,24 @@ export default function AdminPage() {
               required
             />
           </div>
+          {turnstileSiteKey && (
+            <div className="form-group" style={{ marginTop: 12 }}>
+              <Turnstile
+                siteKey={turnstileSiteKey}
+                onVerify={(token) => setTurnstileToken(token)}
+                onError={() => {
+                  setTurnstileToken(null)
+                  setError('人机验证失败，请重试')
+                }}
+                onExpire={() => {
+                  setTurnstileToken(null)
+                  setError('验证已过期，请重新验证')
+                }}
+              />
+            </div>
+          )}
           <div style={{ marginTop: 12, display: 'flex', gap: 12 }}>
-            <button type="submit" className="btn btn-primary" disabled={authLoading}>
+            <button type="submit" className="btn btn-primary" disabled={authLoading || (!!turnstileSiteKey && !turnstileToken)}>
               {authLoading ? '登录中...' : '登录'}
             </button>
             <a className="btn btn-default" href="/">返回首页</a>
@@ -151,12 +182,8 @@ export default function AdminPage() {
         <div>加载中...</div>
       ) : (
         <>
-          {/* 视图切换与操作 */}
+          {/* 操作栏 */}
           <div style={{ display: 'flex', gap: 12, alignItems: 'center', marginBottom: 12 }}>
-            <div className="btn-group">
-              <button className={`btn btn-default ${view === 'visual' ? 'active' : ''}`} onClick={() => setView('visual')}>可视化</button>
-              <button className={`btn btn-default ${view === 'json' ? 'active' : ''}`} onClick={() => setView('json')}>JSON</button>
-            </div>
             <button className="btn btn-success" onClick={handleSave} disabled={saving}>
               {saving ? '保存中...' : '保存'}
             </button>
@@ -164,20 +191,68 @@ export default function AdminPage() {
           </div>
 
           {/* 主编辑区 */}
-          {view === 'visual' ? (
-            navObj ? (
-              <VisualEditor value={navObj} onChange={onVisualChange} />
-            ) : (
-              <div>数据为空</div>
-            )
+          {navObj ? (
+            <VisualEditor value={navObj} onChange={onVisualChange} />
           ) : (
-            <textarea
-              value={jsonText}
-              onChange={(e) => setJsonText(e.target.value)}
-              style={{ width: '100%', height: '70vh', fontFamily: 'Consolas, Menlo, monospace', fontSize: 13, lineHeight: '1.5', padding: 12, border: '1px solid #ddd', borderRadius: 4 }}
-            />
+            <div>数据为空</div>
           )}
+
+          {/* 底部保存按钮 */}
+          <div style={{ 
+            position: 'sticky', 
+            bottom: 0, 
+            background: '#fff', 
+            padding: '16px 0', 
+            borderTop: '1px solid #ddd',
+            marginTop: 20,
+            display: 'flex',
+            gap: 12,
+            justifyContent: 'center',
+            zIndex: 10
+          }}>
+            <button className="btn btn-success btn-lg" onClick={handleSave} disabled={saving}>
+              {saving ? '保存中...' : '保存'}
+            </button>
+            <a className="btn btn-default btn-lg" href="/">返回首页</a>
+          </div>
         </>
+      )}
+
+      {/* 返回顶部按钮（电梯导航） */}
+      {loggedIn && !loading && showBackToTop && (
+        <button
+          onClick={scrollToTop}
+          style={{
+            position: 'fixed',
+            bottom: 30,
+            right: 30,
+            width: 50,
+            height: 50,
+            borderRadius: '50%',
+            background: '#5cb85c',
+            color: '#fff',
+            border: 'none',
+            cursor: 'pointer',
+            fontSize: 24,
+            boxShadow: '0 2px 8px rgba(0,0,0,0.2)',
+            zIndex: 1000,
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            transition: 'all 0.3s ease'
+          }}
+          onMouseEnter={(e) => {
+            e.currentTarget.style.background = '#4cae4c'
+            e.currentTarget.style.transform = 'scale(1.1)'
+          }}
+          onMouseLeave={(e) => {
+            e.currentTarget.style.background = '#5cb85c'
+            e.currentTarget.style.transform = 'scale(1)'
+          }}
+          title="返回顶部"
+        >
+          ↑
+        </button>
       )}
     </div>
   )

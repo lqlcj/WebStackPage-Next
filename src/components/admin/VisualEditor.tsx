@@ -1,6 +1,6 @@
 "use client"
 
-import { useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { isHostedLogo } from '@/lib/hosted'
 
 // Types (与 src/types/nav.ts 对齐的最小定义)
@@ -17,6 +17,15 @@ interface VisualEditorProps {
 
 export default function VisualEditor({ value, onChange }: VisualEditorProps) {
   const [busy, setBusy] = useState<string | null>(null)
+  const [message, setMessage] = useState<{ type: 'success' | 'error'; text: string } | null>(null)
+  const [pendingMenuIndex, setPendingMenuIndex] = useState<number | null>(null)
+  const menuRefs = useRef<(HTMLDivElement | null)[]>([])
+
+  // 显示提示消息
+  const showMessage = (type: 'success' | 'error', text: string) => {
+    setMessage({ type, text })
+    setTimeout(() => setMessage(null), 3000)
+  }
 
   const update = (nv: NavData) => onChange(structuredClone(nv))
 
@@ -28,6 +37,8 @@ export default function VisualEditor({ value, onChange }: VisualEditorProps) {
     } else {
       nv.menus.push({ id: genId('新目录'), type: 'folder', title: '新目录', icon: 'linecons-lightbulb', children: [] })
     }
+    // 记录新建项索引，用于滚动定位与聚焦
+    setPendingMenuIndex(nv.menus.length - 1)
     update(nv)
   }
 
@@ -112,17 +123,48 @@ export default function VisualEditor({ value, onChange }: VisualEditorProps) {
       const site = getSiteAt(nv, mi, ciOrSi, siMaybe)
       site.logo = j.url
       update(nv)
+      showMessage('success', '上传成功')
     } catch (e) {
       console.error(e)
-      alert('上传失败')
+      showMessage('error', '上传失败')
     } finally {
       setBusy(null)
     }
   }
 
+  // 新建后自动滚动到对应面板并聚焦第一个输入框
+  useEffect(() => {
+    if (pendingMenuIndex == null) return
+    const el = menuRefs.current[pendingMenuIndex]
+    if (el) {
+      // 使用 block: 'center' 确保新项在视口中央，并添加偏移量避免被顶部固定元素遮挡
+      el.scrollIntoView({ behavior: 'smooth', block: 'center' })
+      // 延迟一点点等待滚动与渲染稳定
+      setTimeout(() => {
+        const firstInput = el.querySelector('input') as HTMLInputElement | null
+        if (firstInput) {
+          try { firstInput.focus(); firstInput.select(); } catch {}
+        }
+      }, 300)
+    }
+    setPendingMenuIndex(null)
+  }, [pendingMenuIndex, value.menus.length])
+
   return (
     <div>
       {busy && <div style={{ color: '#888', marginBottom: 8 }}>{busy}</div>}
+      {message && (
+        <div style={{
+          background: message.type === 'success' ? '#dfd' : '#fee',
+          border: `1px solid ${message.type === 'success' ? '#bfb' : '#fbb'}`,
+          color: message.type === 'success' ? '#060' : '#a00',
+          padding: 10,
+          marginBottom: 12,
+          borderRadius: 4
+        }}>
+          {message.text}
+        </div>
+      )}
 
       {/* 顶部工具条 */}
       <div style={{ display: 'flex', gap: 8, marginBottom: 12 }}>
@@ -132,7 +174,12 @@ export default function VisualEditor({ value, onChange }: VisualEditorProps) {
 
       {/* 菜单列表 */}
       {value.menus.map((m, mi) => (
-        <div key={mi} className="panel panel-default" style={{ padding: 12, marginBottom: 12 }}>
+        <div
+          key={mi}
+          ref={(el) => (menuRefs.current[mi] = el)}
+          className="panel panel-default"
+          style={{ padding: 12, marginBottom: 12 }}
+        >
           <div style={{ display: 'flex', gap: 8, alignItems: 'center', flexWrap: 'wrap' }}>
             <strong>菜单 {mi + 1}</strong>
             <span className="label label-info">{m.type}</span>
@@ -191,7 +238,15 @@ export default function VisualEditor({ value, onChange }: VisualEditorProps) {
                             onChange={(e) => onUploadLogo(mi, si, undefined, e.target.files?.[0] || null)} />
                         </label>
                         <button className="btn btn-danger btn-xs" title="删除当前 Logo（仅托管资源）"
-                          onClick={async () => { await deleteHostedLogo(s.logo); onFieldChange(['menus', mi, 'items', si, 'logo'], ''); }}>
+                          onClick={async () => { 
+                            try {
+                              await deleteHostedLogo(s.logo)
+                              onFieldChange(['menus', mi, 'items', si, 'logo'], '')
+                              showMessage('success', '移除成功')
+                            } catch (e) {
+                              showMessage('error', '移除失败')
+                            }
+                          }}>
                           移除
                         </button>
                       </div>
