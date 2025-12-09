@@ -12,7 +12,9 @@ interface SidebarProps {
 
 export default function Sidebar({ menus, collapsed = false }: SidebarProps) {
   // 默认折叠所有文件夹（刷新后不自动展开）
-  const [expandedFolders, setExpandedFolders] = useState<Set<string>>(new Set())
+  // 使用函数初始化确保服务器端和客户端一致
+  const [expandedFolders, setExpandedFolders] = useState<Set<string>>(() => new Set())
+  const [isMounted, setIsMounted] = useState(false)
 
   // 所有可滚动锚点（一级分类 + 子分类）用于 ScrollSpy
   const allAnchorIds = useMemo(() => {
@@ -24,6 +26,11 @@ export default function Sidebar({ menus, collapsed = false }: SidebarProps) {
     return ids
   }, [menus])
   const activeId = useScrollSpy(allAnchorIds, 120)
+
+  // 确保只在客户端 hydration 后使用 activeId
+  useEffect(() => {
+    setIsMounted(true)
+  }, [])
 
   const toggleFolder = (id: string) => {
     const newExpanded = new Set(expandedFolders)
@@ -60,7 +67,8 @@ export default function Sidebar({ menus, collapsed = false }: SidebarProps) {
         <ul id="main-menu" className="main-menu">
           {menus.map((item) => {
             if (isCategoryLink(item)) {
-              const liClass = activeId === item.id ? 'active' : ''
+              // 只在客户端 hydration 后使用 activeId，避免服务器端和客户端不一致
+              const liClass = isMounted && activeId === item.id ? 'active' : ''
               return (
                 <li key={item.id} className={liClass}>
                   <a href={`#${item.id}`} className="smooth">
@@ -73,7 +81,8 @@ export default function Sidebar({ menus, collapsed = false }: SidebarProps) {
 
             if (isSubMenuFolder(item)) {
               const isExpanded = expandedFolders.has(item.id)
-              const anyChildActive = item.children.some((c) => c.id === activeId)
+              // 只在客户端 hydration 后使用 activeId
+              const anyChildActive = isMounted && item.children.some((c) => c.id === activeId)
               const liClass = `has-sub ${isExpanded ? 'opened' : ''} ${anyChildActive ? 'active' : ''}`.trim()
               return (
                 <li key={item.id} className={liClass}>
@@ -90,7 +99,8 @@ export default function Sidebar({ menus, collapsed = false }: SidebarProps) {
                   {isExpanded && (
                     <ul>
                       {item.children.map((child) => {
-                        const childClass = activeId === child.id ? 'active' : ''
+                        // 只在客户端 hydration 后使用 activeId
+                        const childClass = isMounted && activeId === child.id ? 'active' : ''
                         return (
                           <li key={child.id} className={childClass}>
                             <a href={`#${child.id}`} className="smooth">
