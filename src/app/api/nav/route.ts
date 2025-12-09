@@ -1,5 +1,5 @@
 import { NextResponse, NextRequest } from 'next/server'
-import { storage } from '@/lib/storage'
+import { storage } from '@/lib/storage-edge'
 import { validateNavData } from '@/utils/nav'
 
 export const runtime = 'edge'
