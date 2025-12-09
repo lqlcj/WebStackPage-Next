@@ -1,32 +1,13 @@
-'use client'
+import dynamic from 'next/dynamic'
+import navData from '@/data/nav.json'
 
-import { useEffect, useState } from 'react'
-import LayoutShell from '@/components/LayoutShell'
-import { NavData } from '@/types/nav'
+// 关闭 SSR，避免 Cloudflare 环境下因服务端/客户端 DOM 不一致导致的 hydration 报错 418/423
+const LayoutShell = dynamic(() => import('@/components/LayoutShell'), {
+  ssr: false,
+  loading: () => <div className="page-container" />,
+})
 
 export default function Home() {
-  const [menus, setMenus] = useState<any[]>([])
-
-  useEffect(() => {
-    let mounted = true
-    const load = async () => {
-      try {
-        const res = await fetch('/api/nav', { cache: 'no-store' })
-        if (!mounted) return
-        if (res.ok) {
-          const data = (await res.json()) as NavData
-          setMenus(data.menus || [])
-        }
-      } catch {
-        if (!mounted) return
-        setMenus([])
-      }
-    }
-    load()
-    return () => {
-      mounted = false
-    }
-  }, [])
-
-  return <LayoutShell menus={menus} />
+  return <LayoutShell menus={navData.menus} />
 }
+
