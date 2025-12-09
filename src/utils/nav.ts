@@ -5,7 +5,7 @@ import { MenuItem, CategoryLink, SubMenuFolder, Site } from '@/types/nav'
  */
 
 /**
- * 检查是否是分类链接
+ * 检查是否是分类链接1
  */
 export function isCategoryLink(item: MenuItem): item is CategoryLink {
   return item.type === 'link'
