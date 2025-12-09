@@ -22,8 +22,12 @@ export async function POST(req: NextRequest) {
     const buf = await file.arrayBuffer()
     const url = await storage.uploadImage(buf, file.name)
     return NextResponse.json({ url })
-  } catch (e) {
-    return NextResponse.json({ error: 'Upload failed' }, { status: 500 })
+  } catch (e: any) {
+    console.error('[API /upload POST]', e?.message || e)
+    return NextResponse.json({ 
+      error: 'Upload failed',
+      message: e?.message || 'Unknown error'
+    }, { status: 500 })
   }
 }
 
@@ -41,8 +45,12 @@ export async function DELETE(req: NextRequest) {
     }
     await storage.deleteImage(url)
     return new NextResponse(null, { status: 204 })
-  } catch (e) {
-    return NextResponse.json({ error: 'Delete failed' }, { status: 500 })
+  } catch (e: any) {
+    console.error('[API /upload DELETE]', e?.message || e)
+    return NextResponse.json({ 
+      error: 'Delete failed',
+      message: e?.message || 'Unknown error'
+    }, { status: 500 })
   }
 }
 

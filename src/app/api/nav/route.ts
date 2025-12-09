@@ -53,8 +53,12 @@ export async function GET() {
         'Cache-Control': 'no-store',
       },
     })
-  } catch (error) {
-    return NextResponse.json({ error: 'Failed to fetch navigation data' }, { status: 500 })
+  } catch (error: any) {
+    console.error('[API /nav GET]', error?.message || error)
+    return NextResponse.json({ 
+      error: 'Failed to fetch navigation data',
+      message: error?.message || 'Unknown error'
+    }, { status: 500 })
   }
 }
 
@@ -88,6 +92,9 @@ export async function POST(request: NextRequest) {
     await storage.saveNavData(normalized)
     return NextResponse.json({ message: 'Navigation data updated successfully' }, { status: 200 })
   } catch (error: any) {
-    return NextResponse.json({ error: String(error?.message || 'Failed to update navigation data') }, { status: 500 })
+    console.error('[API /nav POST]', error?.message || error)
+    return NextResponse.json({ 
+      error: String(error?.message || 'Failed to update navigation data')
+    }, { status: 500 })
   }
 }
