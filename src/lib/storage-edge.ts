@@ -22,7 +22,10 @@ function getPublicBase(): string {
   // Finally try globals (if injected by adapter)
   // @ts-ignore
   const g: any = (globalThis as any)
-  return g.NEXT_PUBLIC_R2_PUBLIC_BASE_URL || g.R2_PUBLIC_BASE_URL || ''
+  const fromGlobal = g.NEXT_PUBLIC_R2_PUBLIC_BASE_URL || g.R2_PUBLIC_BASE_URL
+  if (fromGlobal) return String(fromGlobal)
+  // Final hard fallback (project-specific)
+  return 'https://photo.lcjlq.com'
 }
 
 function randomId(): string {

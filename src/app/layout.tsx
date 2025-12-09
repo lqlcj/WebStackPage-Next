@@ -36,7 +36,7 @@ export default function RootLayout({
     <html lang="zh">
       <head>
         <link rel="shortcut icon" href="/assets/images/favicon.png" />
-        <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Arimo:400,700,400italic" />
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Arimo:400,700,400italic" />
         <link rel="stylesheet" href="/assets/css/fonts/linecons/css/linecons.css" />
         <link rel="stylesheet" href="/assets/css/fonts/fontawesome/css/font-awesome.min.css" />
         <link rel="stylesheet" href="/assets/css/bootstrap.css" />
