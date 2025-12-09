@@ -10,12 +10,16 @@ function getEnv(): any | undefined {
 }
 
 function getPublicBase(): string {
-  // Prefer server env (if available)
+  // Read from CF Bindings first (runtime)
+  const env = getEnv()
+  const fromEnvBinding = env?.R2_PUBLIC_BASE_URL || env?.NEXT_PUBLIC_R2_PUBLIC_BASE_URL
+  if (fromEnvBinding) return String(fromEnvBinding)
+  // Then try process.env (may be undefined at runtime)
   // @ts-ignore
   const pe: any = typeof process !== 'undefined' ? (process as any).env : undefined
   const fromProcess = pe?.R2_PUBLIC_BASE_URL || pe?.NEXT_PUBLIC_R2_PUBLIC_BASE_URL
   if (fromProcess) return String(fromProcess)
-  // Fallback to globals injected by platform/build
+  // Finally try globals (if injected by adapter)
   // @ts-ignore
   const g: any = (globalThis as any)
   return g.NEXT_PUBLIC_R2_PUBLIC_BASE_URL || g.R2_PUBLIC_BASE_URL || ''
@@ -67,52 +71,52 @@ function extractKeyFromUrl(url: string): string | null {
 export const storage = {
   async getNavData(): Promise<NavData> {
     const env = getEnv()
-    if (env?.WEBSTACK_KV) {
-      const json = await env.WEBSTACK_KV.get('nav.json', { type: 'json' })
-      if (json) return json as NavData
+    if (!env?.WEBSTACK_KV) {
+      // 明确无 KV 绑定，返回空结构（避免混用本地文件导致线上不同步）
       return { menus: [] }
     }
-    // No KV in Edge local/dev: fall back to static import (read-only)
-    const fallback = (await import('@/data/nav.json')).default as NavData
-    return fallback
+    const json = await env.WEBSTACK_KV.get('nav.json', { type: 'json' })
+    if (json) return json as NavData
+    return { menus: [] }
   },
 
   async saveNavData(data: NavData): Promise<void> {
     const env = getEnv()
-    if (env?.WEBSTACK_KV) {
-      await env.WEBSTACK_KV.put('nav.json', JSON.stringify(data))
-      return
+    if (!env?.WEBSTACK_KV) {
+      // 直接抛错，让 /api/nav 返回 500，前端能看到“保存失败：缺少 KV 绑定”
+      throw new Error('KV binding WEBSTACK_KV is not available in this environment')
     }
-    // Edge 本地无 KV 时不可持久化：静默丢弃或抛错。这里选择静默，以免 500。
+    await env.WEBSTACK_KV.put('nav.json', JSON.stringify(data))
   },
 
   async uploadImage(file: ArrayBuffer, filename: string): Promise<string> {
-    const ext = (filename?.split('.').pop() || 'bin').toLowerCase()
-    const baseName = `${randomId()}.${ext}`
     const env = getEnv()
-
-    if (env?.WEBSTACK_BUCKET) {
-      const key = `webstack/${baseName}`
-      await (env.WEBSTACK_BUCKET as R2Bucket).put(key, file, {
-        httpMetadata: { contentType: mimeFromExt(ext) || 'application/octet-stream' },
-      })
-      const base = getPublicBase()
-      if (!base) return `r2://${key}`
-      return joinUrl(base, key)
+    if (!env?.WEBSTACK_BUCKET) {
+      throw new Error('R2 binding WEBSTACK_BUCKET is not available in this environment')
     }
 
-    // Edge 本地无 R2：返回占位 r2:// 路径（不可访问），便于链路测试
-    return `r2://webstack/${baseName}`
+    const ext = (filename?.split('.').pop() || 'bin').toLowerCase()
+    const baseName = `${randomId()}.${ext}`
+    const key = `webstack/${baseName}`
+
+    await (env.WEBSTACK_BUCKET as R2Bucket).put(key, file, {
+      httpMetadata: { contentType: mimeFromExt(ext) || 'application/octet-stream' },
+    })
+
+    const base = getPublicBase()
+    if (!base) {
+      // 不再返回 r2://，而是直接抛错让前端提示配置问题
+      throw new Error('R2_PUBLIC_BASE_URL (or NEXT_PUBLIC_R2_PUBLIC_BASE_URL) is not set')
+    }
+    return joinUrl(base, key)
   },
 
   async deleteImage(url: string): Promise<void> {
     const env = getEnv()
+    if (!env?.WEBSTACK_BUCKET) return
     const key = extractKeyFromUrl(url)
     if (!key) return
-    if (env?.WEBSTACK_BUCKET) {
-      await (env.WEBSTACK_BUCKET as R2Bucket).delete(key)
-    }
-    // 无 R2 时忽略
+    await (env.WEBSTACK_BUCKET as R2Bucket).delete(key)
   },
 }
 
