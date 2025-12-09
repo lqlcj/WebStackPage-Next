@@ -32,6 +32,9 @@ export default function Sidebar({ menus, collapsed = false }: SidebarProps) {
     setIsMounted(true)
   }, [])
 
+  // 在 hydration 完成前，不渲染任何依赖于 activeId 的类名
+  // 这样可以确保服务器端和客户端初始渲染完全一致
+
   const toggleFolder = (id: string) => {
     const newExpanded = new Set(expandedFolders)
     if (newExpanded.has(id)) newExpanded.delete(id)
@@ -68,9 +71,10 @@ export default function Sidebar({ menus, collapsed = false }: SidebarProps) {
           {menus.map((item) => {
             if (isCategoryLink(item)) {
               // 只在客户端 hydration 后使用 activeId，避免服务器端和客户端不一致
-              const liClass = isMounted && activeId === item.id ? 'active' : ''
+              // 使用空字符串而不是 undefined，确保类名始终是字符串类型
+              const liClass = isMounted && activeId && activeId === item.id ? 'active' : ''
               return (
-                <li key={item.id} className={liClass}>
+                <li key={item.id} className={liClass || undefined}>
                   <a href={`#${item.id}`} className="smooth">
                     <i className={item.icon}></i>
                     <span className="title">{item.title}</span>
@@ -82,8 +86,8 @@ export default function Sidebar({ menus, collapsed = false }: SidebarProps) {
             if (isSubMenuFolder(item)) {
               const isExpanded = expandedFolders.has(item.id)
               // 只在客户端 hydration 后使用 activeId
-              const anyChildActive = isMounted && item.children.some((c) => c.id === activeId)
-              const liClass = `has-sub ${isExpanded ? 'opened' : ''} ${anyChildActive ? 'active' : ''}`.trim()
+              const anyChildActive = isMounted && activeId && item.children.some((c) => c.id === activeId)
+              const liClass = `has-sub${isExpanded ? ' opened' : ''}${anyChildActive ? ' active' : ''}`
               return (
                 <li key={item.id} className={liClass}>
                   <a
@@ -100,9 +104,9 @@ export default function Sidebar({ menus, collapsed = false }: SidebarProps) {
                     <ul>
                       {item.children.map((child) => {
                         // 只在客户端 hydration 后使用 activeId
-                        const childClass = isMounted && activeId === child.id ? 'active' : ''
+                        const childClass = isMounted && activeId && activeId === child.id ? 'active' : ''
                         return (
-                          <li key={child.id} className={childClass}>
+                          <li key={child.id} className={childClass || undefined}>
                             <a href={`#${child.id}`} className="smooth">
                               <span className="title">{child.title}</span>
                               {child.title === '网页灵感' && (

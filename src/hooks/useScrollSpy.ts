@@ -1,22 +1,23 @@
-import { useEffect, useState, useLayoutEffect } from 'react'
+import { useEffect, useState } from 'react'
 
 /**
  * 根据页面滚动高亮当前锚点（仿 ScrollSpy）
  * 修复 hydration mismatch：确保服务器端和客户端初始渲染一致
  */
 export function useScrollSpy(ids: string[], offset = 120) {
-  // 初始状态：服务器端和客户端都使用第一个 ID（如果存在）
-  // 这样可以确保初始渲染一致
-  const [activeId, setActiveId] = useState<string>(ids[0] || '')
+  // 初始状态：服务器端和客户端都使用空字符串，确保完全一致
+  // 只有在客户端 hydration 完成后才设置实际值
+  const [activeId, setActiveId] = useState<string>('')
   const [mounted, setMounted] = useState(false)
 
-  // 使用 useLayoutEffect 在 DOM 更新后同步执行，避免闪烁
-  useLayoutEffect(() => {
+  useEffect(() => {
+    // 标记为已挂载，只在客户端执行
     setMounted(true)
   }, [])
 
   useEffect(() => {
-    if (!mounted || !ids.length) return
+    // 只有在客户端挂载后才执行
+    if (!mounted || typeof window === 'undefined' || !ids.length) return
 
     // 确保 DOM 已加载
     const elements = ids
@@ -24,7 +25,10 @@ export function useScrollSpy(ids: string[], offset = 120) {
       .filter((el): el is HTMLElement => !!el)
 
     if (!elements.length) {
-      // 如果没有找到元素，保持初始值
+      // 如果没有找到元素，使用第一个 ID 作为默认值
+      if (ids[0]) {
+        setActiveId(ids[0])
+      }
       return
     }
 
@@ -50,6 +54,7 @@ export function useScrollSpy(ids: string[], offset = 120) {
     }
   }, [ids, offset, mounted])
 
-  return activeId
+  // 在服务器端和客户端 hydration 完成前，始终返回空字符串
+  return mounted ? activeId : ''
 }
 
