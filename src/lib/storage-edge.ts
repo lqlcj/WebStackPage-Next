@@ -9,6 +9,18 @@ function getEnv(): any | undefined {
   return (globalThis as any)?.env
 }
 
+function getPublicBase(): string {
+  // Prefer server env (if available)
+  // @ts-ignore
+  const pe: any = typeof process !== 'undefined' ? (process as any).env : undefined
+  const fromProcess = pe?.R2_PUBLIC_BASE_URL || pe?.NEXT_PUBLIC_R2_PUBLIC_BASE_URL
+  if (fromProcess) return String(fromProcess)
+  // Fallback to globals injected by platform/build
+  // @ts-ignore
+  const g: any = (globalThis as any)
+  return g.NEXT_PUBLIC_R2_PUBLIC_BASE_URL || g.R2_PUBLIC_BASE_URL || ''
+}
+
 function randomId(): string {
   if (typeof crypto !== 'undefined' && typeof (crypto as any).randomUUID === 'function') {
     return (crypto as any).randomUUID()
@@ -71,8 +83,7 @@ export const storage = {
       await env.WEBSTACK_KV.put('nav.json', JSON.stringify(data))
       return
     }
-    // Edge 本地无 KV 时不可持久化：静默丢弃（或抛错由你决定）。
-    // throw new Error('KV not available in this environment')
+    // Edge 本地无 KV 时不可持久化：静默丢弃或抛错。这里选择静默，以免 500。
   },
 
   async uploadImage(file: ArrayBuffer, filename: string): Promise<string> {
@@ -85,7 +96,7 @@ export const storage = {
       await (env.WEBSTACK_BUCKET as R2Bucket).put(key, file, {
         httpMetadata: { contentType: mimeFromExt(ext) || 'application/octet-stream' },
       })
-      const base = process.env.R2_PUBLIC_BASE_URL || ''
+      const base = getPublicBase()
       if (!base) return `r2://${key}`
       return joinUrl(base, key)
     }
@@ -109,4 +120,3 @@ interface R2Bucket {
   put: (key: string, value: any, options?: any) => Promise<any>
   delete: (key: string) => Promise<any>
 }
-
