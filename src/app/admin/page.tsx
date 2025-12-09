@@ -3,7 +3,6 @@
 import { useEffect, useState, useRef } from 'react'
 import type { NavData } from '@/types/nav'
 import VisualEditor from '@/components/admin/VisualEditor'
-import Turnstile from '@/components/Turnstile'
 
 export default function AdminPage() {
   const [loading, setLoading] = useState(true)
@@ -14,7 +13,6 @@ export default function AdminPage() {
   const [loggedIn, setLoggedIn] = useState<boolean>(false)
   const [password, setPassword] = useState('')
   const [authLoading, setAuthLoading] = useState(false)
-  const [turnstileToken, setTurnstileToken] = useState<string | null>(null)
 
   // 数据状态
   const [navObj, setNavObj] = useState<NavData | null>(null)
@@ -60,28 +58,15 @@ export default function AdminPage() {
     init()
   }, [])
 
-  // 只在客户端获取环境变量，避免 SSR 不匹配
-  const [turnstileSiteKey, setTurnstileSiteKey] = useState('')
-
-  useEffect(() => {
-    if (typeof window !== 'undefined') {
-      setTurnstileSiteKey(process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY || '')
-    }
-  }, [])
-
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault()
-    if (turnstileSiteKey && !turnstileToken) {
-      setError('请完成人机验证')
-      return
-    }
     setAuthLoading(true)
     setError(null)
     try {
       const res = await fetch('/api/auth/login', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ password, turnstileToken: turnstileToken || undefined }),
+        body: JSON.stringify({ password }),
       })
       if (!res.ok) {
         const j = await res.json().catch(() => ({}))
@@ -96,7 +81,6 @@ export default function AdminPage() {
       setNavObj(data)
     } catch (e: any) {
       setError(e.message || '未知错误')
-      setTurnstileToken(null) // 失败后重置 token
     } finally {
       setAuthLoading(false)
       setLoading(false)
@@ -162,24 +146,8 @@ export default function AdminPage() {
               required
             />
           </div>
-          {turnstileSiteKey && (
-            <div className="form-group" style={{ marginTop: 12 }}>
-              <Turnstile
-                siteKey={turnstileSiteKey}
-                onVerify={(token) => setTurnstileToken(token)}
-                onError={() => {
-                  setTurnstileToken(null)
-                  setError('人机验证失败，请重试')
-                }}
-                onExpire={() => {
-                  setTurnstileToken(null)
-                  setError('验证已过期，请重新验证')
-                }}
-              />
-            </div>
-          )}
           <div style={{ marginTop: 12, display: 'flex', gap: 12 }}>
-            <button type="submit" className="btn btn-primary" disabled={authLoading || (!!turnstileSiteKey && !turnstileToken)}>
+            <button type="submit" className="btn btn-primary" disabled={authLoading}>
               {authLoading ? '登录中...' : '登录'}
             </button>
             <a className="btn btn-default" href="/">返回首页</a>
