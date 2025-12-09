@@ -1,13 +1,9 @@
-import dynamic from 'next/dynamic'
+import LayoutShell from '@/components/LayoutShell'
 import navData from '@/data/nav.json'
-
-// 关闭 SSR，避免 Cloudflare 环境下因服务端/客户端 DOM 不一致导致的 hydration 报错 418/423
-const LayoutShell = dynamic(() => import('@/components/LayoutShell'), {
-  ssr: false,
-  loading: () => <div className="page-container" />,
-})
+import { MenuItem } from '@/types/nav'
 
 export default function Home() {
-  return <LayoutShell menus={navData.menus} />
+  const menus = navData.menus as MenuItem[]
+  return <LayoutShell menus={menus} />
 }
 
