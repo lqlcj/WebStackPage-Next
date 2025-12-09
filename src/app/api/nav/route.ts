@@ -1,5 +1,5 @@
 import { NextResponse, NextRequest } from 'next/server'
-import { storage } from '@/lib/storage-edge'
+import { storage, diagnoseEnv } from '@/lib/storage-edge'
 
 export const runtime = 'edge'
 export const dynamic = 'force-dynamic'
@@ -69,10 +69,24 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
     }
 
+    console.log('[API /nav POST] Request received')
+    
+    // 诊断环境变量
+    const diagnosis = diagnoseEnv()
+    console.log('[API /nav POST] Environment diagnosis:', JSON.stringify(diagnosis, null, 2))
+    
+    if (!diagnosis.kvAvailable) {
+      console.error('[API /nav POST] ⚠️ WEBSTACK_KV is not available!')
+      console.error('[API /nav POST] Diagnosis details:', diagnosis.details)
+    }
+    
     const body = await request.json().catch(() => null)
     if (!body || typeof body !== 'object') {
+      console.error('[API /nav POST] Invalid payload')
       return NextResponse.json({ error: 'Invalid payload' }, { status: 400 })
     }
+
+    console.log('[API /nav POST] Payload received, menus count:', body?.menus?.length || 0)
 
     const normalized = normalizeNavData(body)
     // 宽松处理：如果有缺失 id/title，自动生成占位，避免 400
@@ -89,12 +103,19 @@ export async function POST(request: NextRequest) {
       return m
     })
 
+    console.log('[API /nav POST] Normalized data, menus count:', normalized.menus?.length || 0)
+    console.log('[API /nav POST] Attempting to save...')
+
     await storage.saveNavData(normalized)
+    
+    console.log('[API /nav POST] ✓ Save completed successfully')
     return NextResponse.json({ message: 'Navigation data updated successfully' }, { status: 200 })
   } catch (error: any) {
-    console.error('[API /nav POST]', error?.message || error)
+    console.error('[API /nav POST] ✗ Error occurred:', error?.message || error)
+    console.error('[API /nav POST] Error stack:', error?.stack)
     return NextResponse.json({ 
-      error: String(error?.message || 'Failed to update navigation data')
+      error: String(error?.message || 'Failed to update navigation data'),
+      details: process.env.NODE_ENV === 'development' ? error?.stack : undefined
     }, { status: 500 })
   }
 }
