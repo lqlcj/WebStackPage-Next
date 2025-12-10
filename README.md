@@ -1,8 +1,16 @@
-// ...existing code...
 
-# WebStackPage
+# WebStackPage-Next
 
-轻量的 Next.js + TypeScript 静态/SSR 信息展示站点模板，包含站点配置、导航、可复用组件与简单的管理页面。
+演示地址：https://nav.lcjlq.com/
+
+基于开源项目：WebStackPage.github.io 重构的轻量 Next.js + TypeScript 静态/SSR 信息展示站点模板，包含站点配置、导航、可复用组件与简单的管理页面。
+
+前端和原项目原型一模一样，用react重写。加装了后台增删改查功能，你只需把项目部署在cloudflare上，配置好KV和R2存储，即可拥有一个永久免费的前后端个人导航。
+
+登录后台方式是在域名后加：/admin/login   登录后会重定向到admin页面，初始密码admin123  后续你换成自己的KV密码就行。
+
+<img width="925" height="708" alt="image" src="https://github.com/user-attachments/assets/60acfa2e-e0b5-4aa6-9062-a91d8583b137" />
+
 
 ## 主要功能
 
