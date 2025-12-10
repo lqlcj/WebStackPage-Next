@@ -1,7 +1,7 @@
 
 # WebStackPage-Next
 
-演示地址：[https://nav.lcjlq.com/](https://webstackpage-next.pages.dev/)
+演示地址：https://webstackpage-next.pages.dev/
 
 基于开源项目：WebStackPage.github.io 重构的轻量 Next.js + TypeScript 静态/SSR 信息展示站点模板，包含站点配置、导航、可复用组件与简单的管理页面。
 
