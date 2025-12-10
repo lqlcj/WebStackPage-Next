@@ -5,7 +5,7 @@
 
 基于开源项目：WebStackPage.github.io 重构的轻量 Next.js + TypeScript 静态/SSR 信息展示站点模板，包含站点配置、导航、可复用组件与简单的管理页面。
 
-## 只需要花十几元去某🐟开通个cloudflareR2存储和KV存储，前后端就通了，只要cloudflare不倒，你的导航页面永远可用。
+首先部署成本是：花十几元去某鱼开通个cloudflareR2存储和KV存储，这个项目的前后端就闭环了，可以在后台非常方便的增删改查了。
 
 ## 增删改查功能
 
