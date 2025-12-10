@@ -1,53 +1,76 @@
-# Role
-你是一位精通 **Next.js 14+ (App Router)** 的全栈架构师。
-当前任务：基于 `WebStackPage` 开源项目的 **中文版 (`cn/index.html`)**，重构为一个 **全栈导航站**。
+// ...existing code...
 
-# 📂 Context & Source Mapping (核心目录映射)
-用户希望将原项目的多语言结构扁平化，仅保留中文版作为网站根目录。
-1.  **Source of Truth**: 仅读取原项目中的 `cn/index.html` 作为 HTML/CSS 模板。
-2.  **Ignore**: 忽略 `en/` 目录和根目录下的 `index.html`。
-3.  **Root Target**: 将 `cn/index.html` 的内容迁移至 Next.js 的首页 `src/app/page.js`。用户访问 `http://localhost:3000/` 直接显示中文内容。
-4.  **Static Assets**: 假设用户已将原项目 `assets` 文件夹完整复制到 Next.js 的 `public/assets`。请修正 HTML 中的引用路径（例如将 `../assets/css/` 修正为 `/assets/css/`）。
+# WebStackPage
 
-# 🛠 Global Rules (必须严格遵守)
+轻量的 Next.js + TypeScript 静态/SSR 信息展示站点模板，包含站点配置、导航、可复用组件与简单的管理页面。
 
-## 1. 样式还原 (Pixel-Perfect)
-- **CSS 框架**: 严格保留并复用原版 `bootstrap.css` 和 `style.css`。**绝对禁止**引入 Tailwind CSS。
-- **HTML 结构**: 1:1 保持原版 HTML 嵌套结构（特别是 `sidebar-menu` 和 `main-content` 的对应关系），仅将 `class` 转换为 `className`。
-- **jQuery 移除**: 禁止使用 jQuery。必须使用 React Hooks (`useState`, `useEffect`, `useRef`) 重写交互逻辑（如侧边栏的折叠/展开、点击锚点平滑滚动）。
+## 主要功能
 
-## 2. 数据结构规划 (JSON Schema for KV)
-观察到侧边栏包含**二级菜单**（如“灵感采集”下有子分类），数据存储方案采用 **KV (Key-Value)** 模式，存为一个大的 JSON 对象。请严格使用以下数据结构：
+- 基于 Next.js App Router（app/）的现代页面结构
+- 可配置的站点信息与导航（参见配置文件）
+- 可复用组件库（布局、卡片、关于区块等）
+- 静态资源与公用样式支持
 
-```typescript
-// src/types/nav.ts (示意)
-interface NavData {
-  menus: MenuItem[]; // 侧边栏菜单
-}
+## 快速开始
 
-type MenuItem = CategoryLink | SubMenuFolder;
+1. 安装依赖：
 
-// 类型1: 普通一级分类 (直接包含网址)
-interface CategoryLink {
-  id: string;       // 锚点ID, 如 "recommend"
-  type: "link";
-  title: string;    // 如 "常用推荐"
-  icon: string;     // FontAwesome类名, 如 "fa-star"
-  items: Site[];    // 该分类下的网址列表
-}
+```sh
+npm install
+```
 
-// 类型2: 折叠目录 (包含子分类)
-interface SubMenuFolder {
-  id: string;
-  type: "folder";
-  title: string;    // 如 "灵感采集"
-  icon: string;
-  children: CategoryLink[]; // 子分类列表 (注意: 子分类才是包含 items 的容器)
-}
+2. 本地开发：
 
-interface Site {
-  name: string;
-  url: string;
-  desc: string;
-  logo: string; // 图片路径
-}
+```sh
+npm run dev
+```
+
+3. 生产构建与启动：
+
+```sh
+npm run build
+npm run start
+```
+
+配置与脚本参见 [package.json](package.json)。
+
+## 项目结构（关键文件）
+
+- 应用入口与布局：[`src/app/layout.tsx`](src/app/layout.tsx), [`src/app/page.tsx`](src/app/page.tsx)
+- 布局组件：[`LayoutShell`](src/components/LayoutShell.tsx)
+- 页面组件示例：[`AboutSection`](src/components/AboutSection.tsx), [`SiteCard`](src/components/SiteCard.tsx)
+- 站点配置：[`src/config/site.ts`](src/config/site.ts)
+- 导航数据：[`src/data/nav.json`](src/data/nav.json)
+- Hooks：[`useNavigation`](src/hooks/useNavigation.ts), [`useScrollSpy`](src/hooks/useScrollSpy.ts)
+- 本地存储/边缘存储逻辑：[`src/lib/storage.ts`](src/lib/storage.ts), [`src/lib/storage-edge.ts`](src/lib/storage-edge.ts)
+- 全局样式：[`src/styles/globals.css`](src/styles/globals.css)
+- Next 配置：[`next.config.js`](next.config.js)
+- TypeScript 配置：[`tsconfig.json`](tsconfig.json)
+- 公共静态资源：[`public/assets`](public/assets)
+
+## 开发提示
+
+- 导航逻辑与数据：查看 [`src/utils/nav.ts`](src/utils/nav.ts) 与 [`src/hooks/useNavigation.ts`](src/hooks/useNavigation.ts) 以了解如何添加/修改导航项。
+- 若需修改站点元信息或社交链接，编辑 [`src/config/site.ts`](src/config/site.ts)。
+- 组件放置在 [`src/components`](src/components) 下，样式优先使用模块化或全局样式文件。
+
+## 部署
+
+- 本项目可部署到任何支持 Next.js 的平台（Vercel、Netlify 等）。
+- 若需静态导出或自定义服务器行为，请参考 [`next.config.js`](next.config.js)。
+
+## 维护与贡献
+
+- 请遵循现有代码风格（TypeScript + React + CSS Modules / 全局 CSS）。
+- 建议在提交前运行 ESLint 与类型检查：
+
+```sh
+npm run lint
+npm run type-check
+```
+
+## 许可
+
+该仓库包含 LICENSE 文件，请参阅根目录的 [LICENSE](LICENSE)。
+
+// ...existing code...
